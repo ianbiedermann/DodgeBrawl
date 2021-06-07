@@ -6636,7 +6636,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 592689635}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c883e8c7604691b4ea900e18cdc489b5, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -6757,7 +6757,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c883e8c7604691b4ea900e18cdc489b5, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -7341,7 +7341,7 @@ Rigidbody2D:
   m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 4
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c883e8c7604691b4ea900e18cdc489b5, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -7425,7 +7425,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1793935030}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: c883e8c7604691b4ea900e18cdc489b5, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -7520,6 +7520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Controller: {fileID: 1793935035}
   Anim: {fileID: 1793935036}
+  Health: {fileID: 1793935038}
   runSpeed: 40
 --- !u!114 &1793935038
 MonoBehaviour:
@@ -7533,8 +7534,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616c5809ab31d764f826dd39f10e9a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Anim: {fileID: 1793935036}
   maxHealth: 100
   currentHealth: 0
+  Damage: 0
   healthBar: {fileID: 1115894515}
 --- !u!70 &1793935039
 CapsuleCollider2D:

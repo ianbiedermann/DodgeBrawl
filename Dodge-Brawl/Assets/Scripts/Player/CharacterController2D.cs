@@ -8,7 +8,7 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
-	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
+	[SerializeField] private bool m_AirControl = true;							// Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsCollieder;
 	[SerializeField] private Transform m_GroundCheckRight;
 	[SerializeField] private Transform m_GroundCheckLeft;   // A position marking where to check if the player is grounded.
@@ -28,7 +28,7 @@ public class CharacterController2D : MonoBehaviour
 	const float k_CeilingRadius = .3f; // Radius of the overlap circle to determine if the player can stand up
 	public Rigidbody2D m_Rigidbody2D;
 	private Vector3 m_Velocity = Vector3.zero;
-
+	private int Aircontroltimer;
 
 	[Header("Events")]
 	[Space]
@@ -54,7 +54,7 @@ public class CharacterController2D : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		m_AirControl = false;
+		
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 		WallJump = false;
@@ -65,7 +65,6 @@ public class CharacterController2D : MonoBehaviour
 		if (linksGround || rechtsGround || mitteGround)
         {
 			m_Grounded = true;
-			Debug.Log("Grounded");
 			if (!wasGrounded)
 				OnLandEvent.Invoke();
 
@@ -98,6 +97,12 @@ public class CharacterController2D : MonoBehaviour
 
 	public void Move(float move, bool crouch, bool jump)
 	{
+		m_AirControl = true;
+		if (Aircontroltimer > 0)
+        {
+			m_AirControl = false;
+			Aircontroltimer = Aircontroltimer - 1;
+        }
 		// If crouching, check to see if the character can stand up
 		if (!crouch)
 		{
@@ -107,10 +112,6 @@ public class CharacterController2D : MonoBehaviour
 				crouch = true;
 			}
 		}
-		if (m_Rigidbody2D.velocity.y <= 0)
-        {
-			m_AirControl = true;
-        }
 		//only control the player if grounded or airControl is turned on
 			if (m_Grounded || m_AirControl)
 		{
@@ -179,12 +180,14 @@ public class CharacterController2D : MonoBehaviour
 				m_Rigidbody2D.AddForce(new Vector2(-600, m_JumpForce));
 				WallJump = true;
 				Flip();
+				Aircontroltimer = 500;
 			}
 			if (jump && m_Rigidbody2D.velocity.y <= 0f && linksWand)
 			{
 				m_Rigidbody2D.AddForce(new Vector2(600, m_JumpForce));
 				WallJump = true;
 				Flip();
+				Aircontroltimer = 500;
 			}
 		}
 

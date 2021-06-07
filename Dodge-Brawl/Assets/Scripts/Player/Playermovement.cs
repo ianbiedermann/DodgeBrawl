@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Playermovement : MonoBehaviour
 {
-    public CharacterController2D Controller;
+    [SerializeField] private CharacterController2D Controller;
     [SerializeField] private Animator Anim;
+    [SerializeField] private HealthController Health;
     public float runSpeed = 40f;
     private float horizontalmove = 0f;
     private float virticalspeed = 0f;
@@ -21,7 +22,6 @@ public class Playermovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (Anim.GetCurrentAnimatorStateInfo(0).IsName("Player_gettingDamage"))
         {
             horizontalmove = 0;
@@ -34,7 +34,6 @@ public class Playermovement : MonoBehaviour
             virticalspeed = Controller.m_Rigidbody2D.velocity.y;
             Anim.SetFloat("HorizontalSpeed", Mathf.Abs(horizontalmove));
             Anim.SetFloat("VerticalSpeed", virticalspeed);
-            Debug.Log("Eingabe");
             if (Input.GetButtonDown("Jump"))
             {
                 jump = true;
@@ -60,14 +59,23 @@ public class Playermovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Anim.SetBool("GettingDamage", false);
+        Debug.Log(Health.damageTimer);
         //Chrakterbewegung 
         Controller.Move(horizontalmove * Time.fixedDeltaTime , crouch, jump);
         jump = false;
+        if (Health.damageTimer > 0)
+        {
+            Health.damageTimer = Health.damageTimer - 1;
+            Anim.SetBool("GettingDamage", true);
+        }
 
     }
 
     public void OnLanding()
     {
+       
+       
 
             if(Controller.m_Rigidbody2D.velocity.y < 0.01f)
             {
