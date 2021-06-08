@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthController : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class HealthController : MonoBehaviour
 
             if (currentHealth <= 0)
             {
-                Destroy(GameObject.FindWithTag("Player"));
+                SceneManager.LoadScene(0);
             }
 
             healthBar.SetHealth(currentHealth);
