@@ -150,14 +150,14 @@ public class CharacterController2D : MonoBehaviour
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
 
-			if (m_Rigidbody2D.velocity.x > 2f && spriteRender.flipX)
+			if (m_Rigidbody2D.velocity.x > 0.2f && spriteRender.flipX)
 			{
 				// ... flip the player.
 				Flip();
 				Debug.Log("Drehen1");
 			}
 			// Otherwise if the input is moving the player left and the player is facing right...
-			else if (m_Rigidbody2D.velocity.x < -2f && !spriteRender.flipX )
+			else if (m_Rigidbody2D.velocity.x < -0.2f && !spriteRender.flipX )
 			{
 				// ... flip the player.
 				Flip();

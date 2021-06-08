@@ -23,8 +23,6 @@ public class HealthController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Damage = false;
-        m_CurrentClipInfo = this.Anim.GetCurrentAnimatorClipInfo(0);
-        Debug.Log(m_CurrentClipInfo[0].clip.name);
         if (collision.gameObject.tag == "Ball" && damageTimer == 0 )
         {
             currentHealth = currentHealth - 10;
@@ -32,7 +30,7 @@ public class HealthController : MonoBehaviour
             Anim.enabled = false;
             Anim.enabled = true;
             Anim.SetTrigger("Damage");
-            damageTimer = 10;
+            damageTimer = 25;
 
             if (currentHealth <= 0)
             {

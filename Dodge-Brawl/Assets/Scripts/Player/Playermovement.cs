@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Playermovement : MonoBehaviour
 {
     [SerializeField] private CharacterController2D Controller;
     [SerializeField] private Animator Anim;
     [SerializeField] private HealthController Health;
+
     public float runSpeed = 40f;
+
+    [SerializeField] protected Joystick joystick;
+    [SerializeField] protected JumpButton jumpbutton;
+
     private float horizontalmove = 0f;
     private float virticalspeed = 0f;
     private bool jump = false;
@@ -16,7 +22,7 @@ public class Playermovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -29,8 +35,16 @@ public class Playermovement : MonoBehaviour
 
 
         }
-        else {
-            horizontalmove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        else 
+        {
+            if(Math.Abs(joystick.Horizontal) > 0.03 || Input.GetAxisRaw("Horizontal") > 0)
+            {
+                horizontalmove = (Input.GetAxisRaw("Horizontal") + joystick.Horizontal) * runSpeed;
+            }
+            if(Math.Abs(joystick.Horizontal)< 0.03)
+            {
+                horizontalmove = Input.GetAxisRaw("Horizontal") * runSpeed;
+            }
             virticalspeed = Controller.m_Rigidbody2D.velocity.y;
             Anim.SetFloat("HorizontalSpeed", Mathf.Abs(horizontalmove));
             Anim.SetFloat("VerticalSpeed", virticalspeed);
@@ -59,16 +73,10 @@ public class Playermovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Anim.SetBool("GettingDamage", false);
-        Debug.Log(Health.damageTimer);
+        Damage();
         //Chrakterbewegung 
         Controller.Move(horizontalmove * Time.fixedDeltaTime , crouch, jump);
         jump = false;
-        if (Health.damageTimer > 0)
-        {
-            Health.damageTimer = Health.damageTimer - 1;
-            Anim.SetBool("GettingDamage", true);
-        }
 
     }
 
@@ -85,5 +93,18 @@ public class Playermovement : MonoBehaviour
             }
             
 
+    }
+    private void Damage()
+    {
+        Debug.Log(Health.damageTimer);
+        if (Health.damageTimer > 0)
+        {
+            Health.damageTimer = Health.damageTimer - 1;
+            Anim.SetBool("GettingDamage", true);
+        }
+        else
+        {
+            Anim.SetBool("GettingDamage", false);
+        }
     }
 }
