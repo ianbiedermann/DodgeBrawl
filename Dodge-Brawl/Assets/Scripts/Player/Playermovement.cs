@@ -37,18 +37,12 @@ public class Playermovement : MonoBehaviour
         }
         else 
         {
-            if(Math.Abs(joystick.Horizontal) > 0.03 || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                horizontalmove = (Input.GetAxisRaw("Horizontal") + joystick.Horizontal) * runSpeed;
-            }
-            if(Math.Abs(joystick.Horizontal)< 0.03)
-            {
-                horizontalmove = Input.GetAxisRaw("Horizontal") * runSpeed;
-            }
+             horizontalmove = (Input.GetAxisRaw("Horizontal") + joystick.Horizontal) * runSpeed;
+
             virticalspeed = Controller.m_Rigidbody2D.velocity.y;
             Anim.SetFloat("HorizontalSpeed", Mathf.Abs(horizontalmove));
             Anim.SetFloat("VerticalSpeed", virticalspeed);
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") || jumpbutton.pressed)
             {
                 jump = true;
                 Anim.SetBool("IsJumping", true);

@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 public class JumpButton : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     [HideInInspector]
-    protected bool pressed;
+    public bool pressed;
 
     // Start is called before the first frame update
     void Start()
