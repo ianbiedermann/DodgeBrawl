@@ -11,9 +11,6 @@ public class Playermovement : MonoBehaviour
 
     public float runSpeed = 40f;
 
-    [SerializeField] protected Joystick joystick;
-    [SerializeField] protected JumpButton jumpbutton;
-
     private float horizontalmove = 0f;
     private float virticalspeed = 0f;
     private bool jump = false;
@@ -37,12 +34,12 @@ public class Playermovement : MonoBehaviour
         }
         else 
         {
-             horizontalmove = (Input.GetAxisRaw("Horizontal") + joystick.Horizontal) * runSpeed;
+             horizontalmove = Input.GetAxisRaw("Horizontal")* runSpeed;
 
             virticalspeed = Controller.m_Rigidbody2D.velocity.y;
             Anim.SetFloat("HorizontalSpeed", Mathf.Abs(horizontalmove));
             Anim.SetFloat("VerticalSpeed", virticalspeed);
-            if (Input.GetButtonDown("Jump") || jumpbutton.pressed)
+            if (Input.GetButtonDown("Jump"))
             {
                 jump = true;
                 Anim.SetBool("IsJumping", true);

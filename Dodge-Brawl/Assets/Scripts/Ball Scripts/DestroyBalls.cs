@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class DestroyBalls : MonoBehaviour
 {
+    [SerializeField] private Animator AnimBalls;
     public Rigidbody2D rb;
     void Start()
     {

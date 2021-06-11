@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnBalls : MonoBehaviour
 {
+    [SerializeField] private Animator AnimBalls;
     public GameObject BallPrefab;
     private float gameTime;
     public int spawnTimeMultiplier = 1;
