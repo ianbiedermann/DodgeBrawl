@@ -8,6 +8,7 @@ public class Playermovement : MonoBehaviour
     [SerializeField] private CharacterController2D Controller;
     [SerializeField] private Animator Anim;
     [SerializeField] private HealthController Health;
+    [SerializeField] private Joystick joystick;
 
     public float runSpeed = 40f;
 
@@ -34,8 +35,14 @@ public class Playermovement : MonoBehaviour
         }
         else 
         {
-             horizontalmove = Input.GetAxisRaw("Horizontal")* runSpeed;
-
+            if (joystick.Horizontal != 0)
+            {
+                horizontalmove = joystick.Horizontal * runSpeed;
+            }
+            else 
+            {
+                horizontalmove = Input.GetAxis("Horizontal") * runSpeed;
+            }
             virticalspeed = Controller.m_Rigidbody2D.velocity.y;
             Anim.SetFloat("HorizontalSpeed", Mathf.Abs(horizontalmove));
             Anim.SetFloat("VerticalSpeed", virticalspeed);
@@ -97,5 +104,9 @@ public class Playermovement : MonoBehaviour
         {
             Anim.SetBool("GettingDamage", false);
         }
+    }
+    public void Jump()
+    {
+        jump = true;
     }
 }
