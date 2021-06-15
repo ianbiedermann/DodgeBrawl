@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// das war noch das alte Skript von dem ersten Tutorial
 
 public class DestroyBalls : MonoBehaviour
 {
-    [SerializeField] private Animator AnimBalls;
+    [SerializeField] private Animator animator;
     public Rigidbody2D rb;
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        animator.SetBool("isExploding", false);
     }
 
     void FixedUpdate()
@@ -24,7 +24,8 @@ public class DestroyBalls : MonoBehaviour
 IEnumerator DestroyTheBall()
     {
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
+        animator.SetTrigger("isExploding");
+        Destroy(gameObject, animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
 }
