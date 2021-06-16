@@ -15,7 +15,10 @@ public class DestroyBalls : MonoBehaviour
 
     void FixedUpdate()
     {
-        if ( (rb.velocity.x <= 0.3) && (rb.velocity.x >= -0.3) && (rb.velocity.y <= 0.3) && (rb.velocity.y >= -0.3) )
+
+        float velocity = Mathf.Sqrt(rb.velocity.x * rb.velocity.x + rb.velocity.y * rb.velocity.y);
+
+        if ( velocity <= 2.0f )
         {
             StartCoroutine(DestroyTheBall());
         }
